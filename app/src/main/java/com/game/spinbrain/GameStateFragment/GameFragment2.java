@@ -19,6 +19,9 @@ public class GameFragment2 extends Fragment {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     private Button btnNext;
+    int current_state;
+    SharedPreferences save;
+    SharedPreferences.Editor save_editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,11 +34,19 @@ public class GameFragment2 extends Fragment {
         sp = getActivity().getSharedPreferences("GameStateFragment2", Context.MODE_PRIVATE);
         editor = sp.edit();
 
+        save = getActivity().getSharedPreferences("Save", Context.MODE_PRIVATE);
+        save_editor = save.edit();
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editor.putBoolean("isPass", true);
                 editor.commit();
+
+                save_editor.putInt("CurrentState", 3);
+                save_editor.commit();
+
+
                 getFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
                         (Fragment) GameStateFactory.getInstance().getGameState(3)).commit();
             }

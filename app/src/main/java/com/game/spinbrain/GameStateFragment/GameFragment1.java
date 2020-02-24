@@ -14,11 +14,14 @@ import android.widget.Button;
 import com.game.spinbrain.R;
 
 
-public class GameFragment1 extends Fragment /*implements GameStateInterface*/ {
+public class GameFragment1 extends Fragment {
 
     SharedPreferences sp;
-    SharedPreferences.Editor editor;
+    SharedPreferences save;
+    SharedPreferences.Editor game_editor;
+    SharedPreferences.Editor save_editor;
     private Button btnNext;
+    int current_state;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,13 +31,21 @@ public class GameFragment1 extends Fragment /*implements GameStateInterface*/ {
 
         btnNext = (Button) view.findViewById(R.id.btnNext1);
         sp = getActivity().getSharedPreferences("GameStateFragment1", Context.MODE_PRIVATE);
-        editor = sp.edit();
+        game_editor = sp.edit();
+
+        save = getActivity().getSharedPreferences("Save", Context.MODE_PRIVATE);
+        save_editor = save.edit();
+
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putBoolean("isPass", true);
-                editor.commit();
+                game_editor.putBoolean("isPass", true);
+                game_editor.commit();
+
+                save_editor.putInt("CurrentState", 2);
+                save_editor.commit();
+
                 getFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
                         (Fragment) GameStateFactory.getInstance().getGameState(2)).commit();
             }
