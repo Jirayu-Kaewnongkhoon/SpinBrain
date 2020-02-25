@@ -52,11 +52,9 @@ public class StateActivity extends AppCompatActivity {
             stateList.add(stateObj);
 
             sp = getSharedPreferences("GameStateFragment"+i, Context.MODE_PRIVATE);
-//            sp.getInt("StateLevel", 0);
             sp.getBoolean("isPass", false);
             editor = sp.edit();
             editor.putInt("StateLevel", i);
-//            editor.putBoolean("isPass", false);
             editor.commit();
 
 
@@ -90,9 +88,17 @@ public class StateActivity extends AppCompatActivity {
             setVal_sp = mContext.getSharedPreferences("GameStateFragment"+(position+1), Context.MODE_PRIVATE);
 
             holder.stateLv.setText("Lv." +  setVal_sp.getInt("StateLevel", 0));
-            if(setVal_sp.getBoolean("isPass", false) == true) {
+            if((setVal_sp.getBoolean("isPass", false) == true)) {
                 holder.statePass.setImageResource(R.mipmap.green_check);
-            } else holder.statePass.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.statePass.setVisibility(View.VISIBLE);
+                holder.stateLayout.setEnabled(false);
+                if((mContext.getSharedPreferences("Save", Context.MODE_PRIVATE).getInt("CurrentState", 1))
+                        >= (setVal_sp.getInt("StateLevel", 0))) {
+                    holder.stateLayout.setEnabled(true);
+                }
+            }
 
             holder.statePic.setImageResource(R.mipmap.ic_launcher_round);
 
