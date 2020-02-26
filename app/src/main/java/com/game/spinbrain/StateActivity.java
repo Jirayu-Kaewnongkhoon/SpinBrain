@@ -89,16 +89,12 @@ public class StateActivity extends AppCompatActivity {
 
             holder.stateLv.setText("Lv." +  setVal_sp.getInt("StateLevel", 0));
             if((setVal_sp.getBoolean("isPass", false) == true)) {
-                holder.statePass.setImageResource(R.mipmap.green_check);
+                holder.stateCheck.setImageResource(R.mipmap.green_check);
             }
-            else {
-                holder.statePass.setImageResource(R.mipmap.ic_lock);
-                holder.stateLayout.setEnabled(false);
-                if((mContext.getSharedPreferences("Save", Context.MODE_PRIVATE).getInt("CurrentState", 1))
-                        >= (setVal_sp.getInt("StateLevel", 0))) {
-                    holder.stateLayout.setEnabled(true);
-                    holder.statePass.setVisibility(View.INVISIBLE);
-                }
+            else if((mContext.getSharedPreferences("Save", Context.MODE_PRIVATE).getInt("CurrentState", 1))
+                        < (setVal_sp.getInt("StateLevel", 0))) {
+                    holder.stateCheck.setImageResource(R.mipmap.ic_lock);
+                    holder.stateLayout.setEnabled(false);
             }
 
             holder.statePic.setImageResource(R.mipmap.ic_launcher_round);
@@ -125,7 +121,7 @@ public class StateActivity extends AppCompatActivity {
 
         TextView stateLv;
         ImageView statePic;
-        ImageView statePass;
+        ImageView stateCheck;
         ConstraintLayout stateLayout;
 
         public StateViewHolder(@NonNull View itemView) {
@@ -133,7 +129,7 @@ public class StateActivity extends AppCompatActivity {
 
             stateLv = (TextView)itemView.findViewById(R.id.stateLv);
             statePic = (ImageView) itemView.findViewById(R.id.statePic);
-            statePass = (ImageView)itemView.findViewById(R.id.stateCheck);
+            stateCheck = (ImageView)itemView.findViewById(R.id.stateCheck);
 
             stateLayout = (ConstraintLayout) itemView.findViewById(R.id.stateLayout);
 
