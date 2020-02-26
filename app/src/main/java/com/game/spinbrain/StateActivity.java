@@ -92,11 +92,12 @@ public class StateActivity extends AppCompatActivity {
                 holder.statePass.setImageResource(R.mipmap.green_check);
             }
             else {
-                holder.statePass.setVisibility(View.VISIBLE);
+                holder.statePass.setImageResource(R.mipmap.ic_lock);
                 holder.stateLayout.setEnabled(false);
                 if((mContext.getSharedPreferences("Save", Context.MODE_PRIVATE).getInt("CurrentState", 1))
                         >= (setVal_sp.getInt("StateLevel", 0))) {
                     holder.stateLayout.setEnabled(true);
+                    holder.statePass.setVisibility(View.INVISIBLE);
                 }
             }
 
