@@ -91,8 +91,8 @@ public class StateActivity extends AppCompatActivity {
             if((setVal_sp.getBoolean("isPass", false) == true)) {
                 holder.stateCheck.setImageResource(R.mipmap.green_check);
             }
-            else if((mContext.getSharedPreferences("Save", Context.MODE_PRIVATE).getInt("CurrentState", 1))
-                        < (setVal_sp.getInt("StateLevel", 0))) {
+            else if(mContext.getSharedPreferences("Save", Context.MODE_PRIVATE).getInt("CheckPoint", 1)
+                    < (setVal_sp.getInt("StateLevel", 0))) {
                     holder.stateCheck.setImageResource(R.mipmap.ic_lock);
                     holder.stateLayout.setEnabled(false);
             }

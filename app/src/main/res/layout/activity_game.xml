@@ -8,16 +8,17 @@
     tools:context=".GameActivity">
 
 
-    <!--<Button
-        android:id="@+id/btnGameBack"
+    <Button
+        android:id="@+id/btnGameRestart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="@+id/btnGameSelectState"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnGameSelectState"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGameSelectState"

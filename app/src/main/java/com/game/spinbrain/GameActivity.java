@@ -3,6 +3,7 @@ package com.game.spinbrain;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,13 +14,9 @@ import com.game.spinbrain.GameStateFragment.GameStateFactory;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Button /*btnGameBack,*/ btnGameSelectState;
-    private Fragment fragment;
-    int state;
-    GameStateFactory gameState;
-    Fragment game;
-    SharedPreferences sp;
-    SharedPreferences.Editor editor;
+    private Button btnGameRestart, btnGameSelectState;
+    int state,currentState;
+    SharedPreferences save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +29,21 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void bind() {
-//        btnGameBack = (Button) findViewById(R.id.btnGameBack);
+        btnGameRestart = (Button) findViewById(R.id.btnGameRestart);
         btnGameSelectState = (Button) findViewById(R.id.btnGameSelectState);
         state = getIntent().getExtras().getInt("GameState");
-        //sp = getSharedPreferences("GameStateFragment", Context.MODE_PRIVATE);
     }
 
     private void setAction() {
-        /*btnGameBack.setOnClickListener(new View.OnClickListener() {
+        btnGameRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                save = getSharedPreferences("Save", Context.MODE_PRIVATE);
+                currentState = save.getInt("CurrentState", 0);
+                getSupportFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
+                        (Fragment) GameStateFactory.getInstance().getGameState(currentState)).commit();
             }
-        });*/
+        });
 
         btnGameSelectState.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +60,11 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        gameState = GameStateFactory.getInstance();
-        game = (Fragment) gameState.getGameState(state);
+        getSupportFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
+                (Fragment) GameStateFactory.getInstance().getGameState(state)).commit();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.game_state_fragment, game).commit();
+//        save = getSharedPreferences("Save", Context.MODE_PRIVATE);
+//        currentState = save.getInt("CurrentState", 1);
 
     }
 

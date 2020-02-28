@@ -1,5 +1,7 @@
 package com.game.spinbrain.GameStateFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,11 +15,19 @@ import com.game.spinbrain.R;
 
 public class GameFragment3 extends Fragment {
 
+    SharedPreferences save;
+    SharedPreferences.Editor save_editor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game3, container, false);
+
+        save = getActivity().getSharedPreferences("Save", Context.MODE_PRIVATE);
+        save_editor = save.edit();
+        save_editor.putInt("CurrentState", 3);
+        save_editor.commit();
 
         return view;
     }
