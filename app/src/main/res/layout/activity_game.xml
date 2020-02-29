@@ -9,14 +9,26 @@
 
 
     <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        app:layout_constraintBottom_toBottomOf="@+id/btnGameRestart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnGameRestart"
+        app:layout_constraintTop_toTopOf="@+id/btnGameRestart" />
+
+    <Button
         android:id="@+id/btnGameRestart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:text="Reset"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="132dp"
+        android:text="Restart"
         app:layout_constraintBottom_toBottomOf="@+id/btnGameSelectState"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.714"
+        app:layout_constraintStart_toEndOf="@+id/btnGameSelectState"
         app:layout_constraintTop_toTopOf="@+id/btnGameSelectState"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -24,13 +36,12 @@
         android:id="@+id/btnGameSelectState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="16dp"
         android:text="Select State"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/game_state_fragment"

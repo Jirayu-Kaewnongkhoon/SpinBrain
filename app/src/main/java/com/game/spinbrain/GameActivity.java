@@ -14,9 +14,10 @@ import com.game.spinbrain.GameStateFragment.GameStateFactory;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Button btnGameRestart, btnGameSelectState;
+    private Button btnGameRestart, btnGameSelectState, btnSkip;
     int state,currentState;
     SharedPreferences save;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,17 @@ public class GameActivity extends AppCompatActivity {
     private void bind() {
         btnGameRestart = (Button) findViewById(R.id.btnGameRestart);
         btnGameSelectState = (Button) findViewById(R.id.btnGameSelectState);
+        btnSkip = (Button) findViewById(R.id.btnSkip);
         state = getIntent().getExtras().getInt("GameState");
+        save = getSharedPreferences("Save", Context.MODE_PRIVATE);
+        editor = save.edit();
+
     }
 
     private void setAction() {
         btnGameRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save = getSharedPreferences("Save", Context.MODE_PRIVATE);
                 currentState = save.getInt("CurrentState", 0);
                 getSupportFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
                         (Fragment) GameStateFactory.getInstance().getGameState(currentState)).commit();
@@ -53,7 +57,23 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentState = save.getInt("CurrentState", 0);
+                if(save.getInt("CheckPoint", 1) == currentState) {
+                    SharedPreferences state = getSharedPreferences("GameStateFragment"+currentState, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor state_editor = state.edit();
+                    state_editor.putBoolean("isPass", true);
+                    state_editor.commit();
 
+                    editor.putInt("CheckPoint", ++currentState);
+                    editor.commit();
+                } else ++currentState;
+                getSupportFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
+                        (Fragment) GameStateFactory.getInstance().getGameState(currentState)).commit();
+            }
+        });
     }
 
     @Override
@@ -63,8 +83,6 @@ public class GameActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.game_state_fragment,
                 (Fragment) GameStateFactory.getInstance().getGameState(state)).commit();
 
-//        save = getSharedPreferences("Save", Context.MODE_PRIVATE);
-//        currentState = save.getInt("CurrentState", 1);
 
     }
 
