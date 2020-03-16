@@ -15,6 +15,8 @@ import com.game.spinbrain.R;
 
 public class GameFragment3 extends Fragment {
 
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
     SharedPreferences save;
     SharedPreferences.Editor save_editor;
 
@@ -24,9 +26,14 @@ public class GameFragment3 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game3, container, false);
 
+        //get state info
+        sp = getActivity().getSharedPreferences("GameStateFragment3", Context.MODE_PRIVATE);
+        editor = sp.edit();
+
+        //set current state
         save = getActivity().getSharedPreferences("Save", Context.MODE_PRIVATE);
         save_editor = save.edit();
-        save_editor.putInt("CurrentState", 3);
+        save_editor.putInt("CurrentState", sp.getInt("StateLevel", 0));
         save_editor.commit();
 
         return view;

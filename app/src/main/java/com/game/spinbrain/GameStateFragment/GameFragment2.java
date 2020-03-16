@@ -21,7 +21,6 @@ public class GameFragment2 extends Fragment {
     SharedPreferences.Editor editor;
     private Button btnNext,btnSetText;
     private TextView text;
-    int current_state;
     SharedPreferences save;
     SharedPreferences.Editor save_editor;
 
@@ -35,12 +34,14 @@ public class GameFragment2 extends Fragment {
         btnSetText = view.findViewById(R.id.btnSetText2);
         text = view.findViewById(R.id.tvInFragment2);
 
+        //get state info
         sp = getActivity().getSharedPreferences("GameStateFragment2", Context.MODE_PRIVATE);
         editor = sp.edit();
 
+        //set current state
         save = getActivity().getSharedPreferences("Save", Context.MODE_PRIVATE);
         save_editor = save.edit();
-        save_editor.putInt("CurrentState", 2);
+        save_editor.putInt("CurrentState", sp.getInt("StateLevel", 0));
         save_editor.commit();
 
         btnSetText.setOnClickListener(new View.OnClickListener() {

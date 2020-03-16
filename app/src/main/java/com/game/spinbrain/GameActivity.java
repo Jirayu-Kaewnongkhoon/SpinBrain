@@ -64,8 +64,8 @@ public class GameActivity extends AppCompatActivity {
                 if(save.getInt("CheckPoint", 1) == currentState) {
                     SharedPreferences state = getSharedPreferences("GameStateFragment"+currentState, Context.MODE_PRIVATE);
                     SharedPreferences.Editor state_editor = state.edit();
-                    state_editor.putBoolean("isPass", true);
-                    state_editor.commit();
+                    //state_editor.putBoolean("isPass", true);
+                    //state_editor.commit();
 
                     editor.putInt("CheckPoint", ++currentState);
                     editor.commit();
